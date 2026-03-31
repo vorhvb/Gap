@@ -8,6 +8,27 @@ License					GPL v3
 
 ────────────────────────────────────────────────────────────────────── -->
 
-<RCC></RCC>
+<RCC>
+	<qresource prefix = "/Forms">
+		<file alias = "Main window.qml">../UI/Forms/Main window.qml</file>
+		<file alias = "Statistics.qml">../UI/Forms/Statistics.qml</file>
+		<file alias = "Settings.qml">../UI/Forms/Settings.qml</file>
+
+		<file alias = "Main window.qmlc">../Build/Generated/Cache/Main window.qmlc</file>
+		<file alias = "Statistics.qmlc">../Build/Generated/Cache/Statistics.qmlc</file>
+		<file alias = "Settings.qmlc">../Build/Generated/Cache/Settings.qmlc</file>
+	</qresource>
+	<qresource prefix = "/Forms/Staff">
+		<file alias = "Menu.qml">../UI/Forms/Staff/Menu.qml</file>
+		<file alias = "Header.qml">../UI/Forms/Staff/Header.qml</file>
+		<file alias = "Progress.qml">../UI/Forms/Staff/Progress.qml</file>
+		<file alias = "Style.qml">../UI/Forms/Staff/Style.qml</file>
+
+		<file alias = "Menu.qmlc">../Build/Generated/Cache/Staff/Menu.qmlc</file>
+		<file alias = "Header.qmlc">../Build/Generated/Cache/Staff/Header.qmlc</file>
+		<file alias = "Progress.qmlc">../Build/Generated/Cache/Staff/Progress.qmlc</file>
+		<file alias = "Style.qmlc">../Build/Generated/Cache/Staff/Style.qmlc</file>
+	</qresource>
+</RCC>
 
 <!-- ────────────────────────────────────────────────────────────────────── -->
