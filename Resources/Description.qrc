@@ -29,6 +29,11 @@ License					GPL v3
 		<file alias = "Progress.qmlc">../Build/Generated/Cache/Staff/Progress.qmlc</file>
 		<file alias = "Style.qmlc">../Build/Generated/Cache/Staff/Style.qmlc</file>
 	</qresource>
+
+	<qresource prefix = "/Resources">
+		<file>Work.svg</file>
+		<file>Pause.svg</file>
+	</qresource>
 </RCC>
 
 <!-- ────────────────────────────────────────────────────────────────────── -->
