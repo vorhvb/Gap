@@ -17,7 +17,26 @@ import QtQuick.Layouts
 
 ToolBar
 {
-	RowLayout {}
+	id: header
+
+	RowLayout
+	{
+		anchors.fill: parent
+		anchors.margins: 10
+
+		Item {Layout.fillWidth: true}
+
+		Style.ToolButton
+		{
+			icon.name: "chart.bar"
+			onClicked: ;
+		}
+		Style.ToolButton
+		{
+			icon.name: "gear"
+			onClicked: ;
+		}
+	}
 }
 
 // ──────────────────────────────────────────────────────────────────────
