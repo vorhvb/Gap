@@ -1,0 +1,50 @@
+# ──────────────────────────────────────────────────────────────────────
+#
+# Name					build.yml
+# Project				Gap
+# Author	    			Elisey Konstantinov
+#
+# License				GPL v3
+#
+# ──────────────────────────────────────────────────────────────────────
+
+name: Build
+
+# ──────────────────────────────────────────────────────────────────────
+
+on:
+  push:
+    branches: [ xnu ]
+
+# ──────────────────────────────────────────────────────────────────────
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: |
+          brew update
+          brew install llvm lld ccache
+          brew install qt
+
+          brew link --force llvm
+          brew link --force lld
+
+          echo "$(brew --prefix)/share/qt/libexec" >> $GITHUB_PATH
+
+      - name: Prepare
+        run: make prepare
+      - name: Build
+        run: make
+
+      - name: Upload
+        uses: actions/upload-artifact@v6
+        with:
+          name: Gap
+          path: Build/Gap
+
+# ──────────────────────────────────────────────────────────────────────
