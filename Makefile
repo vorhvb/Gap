@@ -69,18 +69,30 @@ prepare:
 # ──────────────────────────────────────────────────────────────────────
 
 clean:
-	#
+	-rm -r Build/Generated
+	-rm -r Build/Objects
 scrub:
-	#
+	-rm -r Build
 run:
 	Build/Gap
 
 # ──────────────────────────────────────────────────────────────────────
 
 dump:
-	#
+	tree || find .
+
+	cat Main.cpp
+
+	cat UI/*.h
+	cat UI/*.cpp
+
+	cat UI/Forms/*.qml
+	cat UI/Forms/Staff/*.qml
+	cat Resources/Description.qrc
+
+	cat Makefile
 
 edit:
-	#
+	code . || $(VISUAL) . || $(EDITOR) .
 
 # ──────────────────────────────────────────────────────────────────────
