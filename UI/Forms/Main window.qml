@@ -63,7 +63,7 @@ Style.ApplicationWindow
 				palette.buttonText: "white"
 				palette.button: main_window.ticking ? "#F3CA27" : "#3DB670"
 
-				onClicked: ;
+				onClicked: main_window.ticking ? main_window.pause() : main_window.start();
 			}
 			Style.Button
 			{
@@ -71,7 +71,7 @@ Style.ApplicationWindow
 				palette.buttonText: "white"
 				palette.button: "#C74D40"
 
-				onClicked: ;
+				onClicked: main_window.reset();
 			}
 		}
 	}

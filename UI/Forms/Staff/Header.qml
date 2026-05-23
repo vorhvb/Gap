@@ -29,12 +29,12 @@ ToolBar
 		Style.ToolButton
 		{
 			icon.name: "chart.bar"
-			onClicked: ;
+			onClicked: main_window.open_statistics();
 		}
 		Style.ToolButton
 		{
 			icon.name: "gear"
-			onClicked: ;
+			onClicked: main_window.open_settings();
 		}
 	}
 }
