@@ -15,9 +15,13 @@
 
 #include <QList>
 #include <QString>
+#include <QFile>
 #include <QTime>
+#include <QUrl>
 
 #include <QTimer>
+#include <QSoundEffect>
+#include <QMessageBox>
 
 // ──────────────────────────────────────────────────────────────────────
 
@@ -60,6 +64,7 @@ class MainWindow : public QObject
 
 	private:
 		QTimer metronome;
+		QSoundEffect sound;
 
 		QTime work_duration; QTime break_duration; QTime long_break_duration; int cycles;
 		QString ringtone;

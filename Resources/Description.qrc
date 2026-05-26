@@ -33,6 +33,8 @@ License					GPL v3
 	<qresource prefix = "/Resources">
 		<file>Work.svg</file>
 		<file>Pause.svg</file>
+
+		<file>Ringtone.wav</file>
 	</qresource>
 </RCC>
 

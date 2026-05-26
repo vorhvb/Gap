@@ -16,6 +16,7 @@
 MainWindow::MainWindow()
 {
 	connect (&metronome, &QTimer::timeout, this, &MainWindow::shake);
+	sound.setLoopCount (QSoundEffect::Infinite);
 
 	if (!read_settings())
 	{
@@ -34,6 +35,9 @@ MainWindow::MainWindow()
 		long_break_duration = QTime (0, 0, long_break_duration.minute());
 	}
 	reset();
+
+	if (!ringtone.isNull()) sound.setSource (QUrl::fromLocalFile (ringtone));
+	else sound.setSource (QUrl("qrc:/Resources/Ringtone.wav"));
 }
 
 // ──────────────────────────────────────────────────────────────────────
@@ -75,14 +79,26 @@ void MainWindow::end()
 	}
 
 	ring (saved_mode);
-	start();
 }
 void MainWindow::ring (QString about)
 {
 	progress << mode; emit progress_changed();
+	sound.play();
 
-	qDebug() << '\a';
-	qDebug() << "Cycle ‘" + about + "’ is done";
+	QMessageBox box;
+	QString body = about == "work" ? "Work is done!" : (about == "break" ? "Break is ended!" : "Long break is ended!");
+	body += '\n';
+
+	box.setWindowTitle ("Gap");
+	box.setText (body + "Ready to go?");
+	box.addButton ("Next cycle", QMessageBox::AcceptRole);
+	box.addButton ("Dismiss", QMessageBox::RejectRole);
+	box.exec();
+
+	if (box.buttonRole (box.clickedButton()) == QMessageBox::AcceptRole) start();
+	else pause();
+
+	sound.stop();
 }
 
 bool MainWindow::read_settings()
