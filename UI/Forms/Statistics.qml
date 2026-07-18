@@ -11,6 +11,8 @@
 import QtQuick
 import QtQuick.Controls
 
+import "qrc:/Forms/Staff"
+
 // ──────────────────────────────────────────────────────────────────────
 
 Window

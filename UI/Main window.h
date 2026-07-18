@@ -13,6 +13,10 @@
 
 // ──────────────────────────────────────────────────────────────────────
 
+#include <QQmlApplicationEngine>
+#include <QQmlComponent>
+#include <QQuickWindow>
+
 #include <QList>
 #include <QString>
 #include <QFile>
@@ -22,6 +26,11 @@
 #include <QTimer>
 #include <QSoundEffect>
 #include <QMessageBox>
+#include <cstddef>
+
+// ──────────────────────────────────────────────────────────────────────
+
+extern QQmlApplicationEngine* escalation;
 
 // ──────────────────────────────────────────────────────────────────────
 
@@ -61,6 +70,11 @@ class MainWindow : public QObject
 
 		void open_settings();
 		void open_statistics();
+
+	protected:
+		//fixme: check if UB. Nope there’s no UB, just error "component is not ready"
+		QQmlComponent statistics {escalation, QUrl ("qrc:/Forms/Statistics.qml")}; QQuickWindow* true_statistics = nullptr;
+		QQmlComponent settings {escalation, QUrl ("qrc:/Forms/Settings.qml")}; QQuickWindow* true_settings = nullptr;
 
 	private:
 		QTimer metronome;

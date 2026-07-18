@@ -11,6 +11,12 @@
 #include "Main window.h"
 #include <QDebug>
 
+#include <QQmlComponent>
+#include <QQuickItem>
+#include <QQmlApplicationEngine>
+
+extern QQmlApplicationEngine* escalation;
+
 // ──────────────────────────────────────────────────────────────────────
 
 MainWindow::MainWindow()
@@ -153,7 +159,10 @@ void MainWindow::open_settings()
 }
 void MainWindow::open_statistics()
 {
-	qDebug() << "Sorry, can’t open statistics: not implimented";
+	//qDebug() << "Sorry, can’t open statistics: not implimented";
+	if (true_statistics == nullptr) true_statistics = (QQuickWindow*)statistics.create(escalation->rootContext());
+	else {true_statistics->raise(); true_statistics->requestActivate();}
+	//fixme: check if UB. If UB make #DF
 }
 
 // ──────────────────────────────────────────────────────────────────────
