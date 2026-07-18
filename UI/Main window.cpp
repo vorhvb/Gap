@@ -75,7 +75,7 @@ void MainWindow::end()
 	else
 	{
 		mode = "work"; emit mode_changed();
-		time = work_duration;
+		time = work_duration; emit time_changed();
 	}
 
 	pause();
