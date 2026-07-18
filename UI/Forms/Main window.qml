@@ -12,11 +12,15 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import "qrc:/Forms/Staff"
+import QtQuick.Effects
 
 // ──────────────────────────────────────────────────────────────────────
 
-Style.ApplicationWindow
+pragma ComponentBehavior: Bound
+
+// ──────────────────────────────────────────────────────────────────────
+
+ApplicationWindow
 {
 	title: "Gap"
 	width: 400
@@ -24,57 +28,101 @@ Style.ApplicationWindow
 
 	visible: true
 
-	menuBar: Menu {}
-	header: Header {}
-
 	ColumnLayout
 	{
 		anchors.centerIn: parent
-		anchors.top: header.bottom
+		anchors.top: parent.bottom
 		anchors.bottom: parent.bottom
 
 		anchors.margins: 10
-		spacing: 25
 
-		Image
-		{
-			source: main_window.mode == "work" ? "qrc:/Resources/Work.svg" : "qrc:/Resources/Pause.svg"
-			sourceSize: Qt.size(256, 256)
+		component SButton: Button {
+			id: root
 
-			Text
-			{
-				text: main_window.time.toLocaleTimeString (Qt.locale(), "mm:ss")
-				anchors.centerIn: parent
-				anchors.verticalCenterOffset: 25
+			// Свойства для настройки стиля
+			property color backgroundColor: "#4A90E2"      // Основной цвет кнопки
+			property color backgroundColorHover: "#357ABD"  // Цвет при наведении
+			property color textColor: "white"               // Цвет текста
+			property real cornerRadius: 8                   // Радиус скругления углов
+			property bool isPrimary: true                   // Primary или Secondary стиль
 
-				font.pointSize: 30
+			implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+			                        implicitContentWidth + leftPadding + rightPadding)
+			implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+			                        implicitContentHeight + topPadding + bottomPadding)
+
+			padding: 12
+			spacing: 8
+
+			// Текст кнопки
+			contentItem: Text {
+			    text: root.text
+			    font: root.font
+			    font.pixelSize: 16
+			    font.weight: Font.Medium
+			    color: root.textColor
+			    horizontalAlignment: Text.AlignHCenter
+			    verticalAlignment: Text.AlignVCenter
+			    elide: Text.ElideRight
 			}
-		}
-		Progress {Layout.alignment: Qt.AlignHCenter; Layout.preferredHeight: 5}
 
-		RowLayout
-		{
-			spacing: 30
-			Layout.alignment: Qt.AlignHCenter
+			// Фон кнопки с градиентом и тенями
+			background: Rectangle {
+			    id: bgRect
+			    radius: root.cornerRadius
 
-			Style.Button
-			{
-				text: main_window.ticking ? "Pause" : "Start"
-				palette.buttonText: "white"
-				palette.button: main_window.ticking ? "#F3CA27" : "#3DB670"
+			    // Градиент в зависимости от состояния
+			    gradient: Gradient {
+			        orientation: Gradient.Vertical
 
-				onClicked: main_window.ticking ? main_window.pause() : main_window.start();
-			}
-			Style.Button
-			{
-				text: "Reset"
-				palette.buttonText: "white"
-				palette.button: "#C74D40"
+			        GradientStop {
+			            position: 0.0
+			            color: root.pressed ?
+			                Qt.darker(root.backgroundColor, 1.1) :
+			                (root.hovered ? root.backgroundColorHover : root.backgroundColor)
+			        }
 
-				onClicked: main_window.reset();
+			        GradientStop {
+			            position: 1.0
+			            color: root.pressed ?
+			                Qt.darker(root.backgroundColor, 1.2) :
+			                (root.hovered ? Qt.darker(root.backgroundColorHover, 1.05) : Qt.darker(root.backgroundColor, 1.1))
+			        }
+			    }
+
+			    // Тень для объема
+			    layer.enabled: true
+			    layer.effect: DropShadow {
+			        transparentBorder: true
+			        horizontalOffset: 0
+			        verticalOffset: 2
+			        radius: 4
+			        samples: 16
+			        color: Qt.rgba(0, 0, 0, 0.15)
+			    }
+
+			    // Анимация изменения цвета
+			    Behavior on gradient {
+			        ColorAnimation {
+			            duration: 150
+			            easing.type: Easing.OutCubic
+			        }
+			    }
+
+			    // Визуальная обратная связь при нажатии
+			    opacity: root.pressed ? 0.95 : 1.0
+
+			    Behavior on opacity {
+			        NumberAnimation {
+			            duration: 100
+			        }
+			    }
 			}
 		}
 	}
+
+	SButton {text: "Go"}
 }
+
 
 // ──────────────────────────────────────────────────────────────────────
