@@ -84,6 +84,8 @@ void MainWindow::end()
 void MainWindow::ring (QString about)
 {
 	progress << mode; emit progress_changed();
+
+	if (sound.isMuted()) return;
 	sound.play();
 
 	QMessageBox box;
@@ -134,11 +136,25 @@ void MainWindow::reset()
 
 void MainWindow::skip()
 {
-	qDebug() << "Sorry, statistics manipulation isn’t implimented :(";
+	if (progress.isEmpty()) return;
+
+	time_machine.time = time; time_machine.mode = mode; time_machine.progress = progress;
+	time_machine.ticking = ticking;
+	time_travel_available = true;
+
+	sound.setMuted (true);
+	metronome.stop(); end();
 }
 void MainWindow::rewind()
 {
-	qDebug() << "Sorry, statistics manipulation isn’t implimented :(";
+	if (!time_travel_available) return;
+	pause();
+
+	time = time_machine.time; emit time_changed(); mode = time_machine.mode; emit mode_changed(); progress = time_machine.progress; emit progress_changed();
+	ticking = time_machine.ticking; emit ticking_changed();
+	time_travel_available = false;
+
+	if (ticking) start();
 }
 
 void MainWindow::clear_all_statistics()
