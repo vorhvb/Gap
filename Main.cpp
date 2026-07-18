@@ -40,7 +40,7 @@ int main (int n, char** x)
 	engine.rootContext() -> setContextProperty ("settings", &settings);
 	engine.rootContext() -> setContextProperty ("statistics", &statistics);
 
-	engine.load (QUrl ("qrc:/Forms/Main window.qml"));
+	engine.load (QUrl ("qrc:/Forms/Settings.qml"));
 
     return gap.exec();
 }
