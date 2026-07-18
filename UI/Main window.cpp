@@ -78,6 +78,7 @@ void MainWindow::end()
 		time = work_duration;
 	}
 
+	pause();
 	ring (saved_mode);
 }
 void MainWindow::ring (QString about)
@@ -96,8 +97,6 @@ void MainWindow::ring (QString about)
 	box.exec();
 
 	if (box.buttonRole (box.clickedButton()) == QMessageBox::AcceptRole) start();
-	else pause();
-
 	sound.stop();
 }
 
