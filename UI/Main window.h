@@ -73,8 +73,8 @@ class MainWindow : public QObject
 
 	protected:
 		//fixme: check if UB. Nope there’s no UB, just error "component is not ready"
-		QQmlComponent statistics {escalation, QUrl ("qrc:/Forms/Statistics.qml")}; QQuickWindow* true_statistics = nullptr;
-		QQmlComponent settings {escalation, QUrl ("qrc:/Forms/Settings.qml")}; QQuickWindow* true_settings = nullptr;
+		QQmlComponent statistics {escalation, QUrl ("qrc:/Forms/Statistics.qml")}; QPointer<QQuickWindow> true_statistics = nullptr;
+		QQmlComponent settings {escalation, QUrl ("qrc:/Forms/Settings.qml")}; QPointer<QQuickWindow> true_settings = nullptr;
 
 	private:
 		QTimer metronome;

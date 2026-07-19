@@ -160,7 +160,13 @@ void MainWindow::open_settings()
 void MainWindow::open_statistics()
 {
 	//qDebug() << "Sorry, can’t open statistics: not implimented";
-	if (true_statistics == nullptr) true_statistics = (QQuickWindow*)statistics.create(escalation->rootContext());
+	if (true_statistics == nullptr)
+	{
+		true_statistics = qobject_cast<QQuickWindow*>(statistics.create(escalation->rootContext()));
+		QObject::connect(true_statistics, &QObject::destroyed, this, [this]() {
+                true_statistics = nullptr;
+            });
+	}
 	else {true_statistics->raise(); true_statistics->requestActivate();}
 	//fixme: check if UB. If UB make #DF
 }
